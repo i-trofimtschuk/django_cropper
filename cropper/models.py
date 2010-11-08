@@ -27,6 +27,8 @@ class SourceImage(models.Model):
                 preview = original.resize(original.size)
             
             contents = StringIO()
+            if preview.mode != 'RGB':
+                preview = preview.convert('RGB')
             preview.save(contents, format='jpeg', quality=25)
             self.preview.save(
                 '%s.jpg' % str(uuid.uuid4()),
